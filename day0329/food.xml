@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    xml은 html과 형제
+    HTML: 데이터를 문서에 어떻게 표현할지가 주력 (디자인)
+            html은 w3c에서 지정한 표준만 사용 가능 즉, 태그가 이미 정해져 있다
+    XML : 데이터를 문서에 어떤 식으로 구성할지 (내용)
+            xml은 개발자가 태그를 정의할 수 있다
+ -->
+
+ <foodList>
+    <food>
+        <name>돈까스</name>
+        <price>8000</price>
+    </food>
+        <food>
+        <name>쫄면</name>
+        <price>6000</price>
+    </food>
+ </foodList>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<script src="../JS/Ball.js"></script>
+<script src="../JS/lib.js"></script>
+<script>
+
+    var wrapper;
+    // 공이 랜덤하게 나오도록 배열로 선언하자
+    var ballArray=["1.png", "2.png", "3.png", "4.png", "5.png", "6.png"];
+    var balls=[]; // 볼 한개를 가리키는 전역변수
+
+    function init(){
+        createWall();
+    }
+
+    // 공을 벽에 가두자~
+    function createWall(){
+        wrapper = document.createElement("div");
+        wrapper.style.width=800+"px";
+        wrapper.style.height=700+"px";
+        wrapper.style.border=5+"px solid red";
+        wrapper.style.margin="auto";
+        wrapper.style.position="relative";
+        document.body.appendChild(wrapper);
+    }
+
+    function createBall(){
+        var velX = getRandom(10)+1;
+        var velY = getRandom(10)+1;
+        
+        var ball = new Ball(wrapper
+        , "../images/ball/"+ballArray[getRandom(ballArray.length)]
+        , 35, 35, velX, velY);  // 생성되는 공은 wrapper에 부착
+
+        balls.push(ball);
+    }
+
+    function space(){
+        //alert(event.keyCode);
+        if(event.keyCode==32){
+            createBall();
+        }
+    }
+
+    function gameLoop(){
+    //배열에 들어있는 만큼만 돌려야..따라서 배열에 아무것도 안돈다!!
+    //즉 undefined 조건 조차 필요X
+        for(var i=0;i<balls.length;i++){
+            balls[i].move();//배열에 들어있는 공들을 하나씩 끄집어 내자!!
+        }
+    }
+
+    window.addEventListener("load", function(){
+        init();
+        setInterval("gameLoop()", 10)
+    });
+
+</script>
+</head>
+<body onkeydown="space()">
+</body>
+</html>

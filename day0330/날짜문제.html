@@ -1,0 +1,26 @@
+<script>
+/*
+1) 2015년 3월 25일에서 100일 후의 월, 일, 요일을 구하시오
+2) 2035년 7월은 무슨 요일부터 시작하는지 구하시오
+*/
+
+var d = new Date();
+d.setFullYear(2015);
+d.setMonth(2);
+d.setDate(25);
+
+d.setDate(d.getDate()+100);
+console.log(d);
+
+
+/*미래로 가자*/
+var d2= new Date();
+d2.setFullYear(2035);
+d2.setMonth(6);
+d2.setDate(1);
+
+d2.setDate(d2.getDate());
+console.log(d2);
+
+console.log(new Date(1950,5,25).getDay());
+</script>

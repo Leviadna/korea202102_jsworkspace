@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>
+*{
+    margin: 0px;
+    padding: 0px;
+}
+#wrapper{
+    width: 100%;
+    height: 750px;
+    background: url("../images/city.jpg");
+    position: relative;
+    overflow: hidden;
+    background-size: cover;
+}
+#info{
+    background: yellow;
+    opacity: 0.6;
+}
+</style>
+<script src="../JS/lib.js"></script>
+<script src="../JS/plane.js"></script>
+<script src="../JS/bullet.js"></script>
+<script src="../JS/enemy.js"></script>
+<script>
+
+var wrapper;
+var info;
+var bgX=0; // 배경처리 변수
+var plane; // 주인공 제어를 위한 변수
+var bulletArray=new Array(); // 총알 여러 개를 제어하기 위한 배열 전역변수
+var enemyArray=new Array(); // 적군 여럿을 가리키기 위한 배열 전역변수
+var enemyImg=["e1.png", "e2.png", "e3.png", "e4.png", "e5.png"];
+
+function init(){
+    wrapper=document.getElementById("wrapper");
+    info=document.getElementById("info");
+    createHero();
+    createEnemy();
+
+    // body태그에 키보드 이벤트 연결
+    document.body.addEventListener("keydown", function(){
+        pressDown();
+    });
+
+    document.body.addEventListener("keyup", function(){
+        pressUp();
+    });
+}
+
+function pressUp(){
+    switch(event.keyCode){
+        case 39:plane.velX=0; break;
+        case 37:plane.velX=0; break;
+        case 40:plane.velY=0; break;
+        case 38:plane.velY=0; break;
+    }
+}
+
+// 키보드 제어 함수 : x 총알(88), z 아이템(90), c 폭탄(67)
+function pressDown(){
+    var key = event.keyCode;
+    
+    switch(key){
+        case 39:plane.velX=5; break;
+        case 37:plane.velX=-5; break;
+        case 40:plane.velY=5; break;
+        case 38:plane.velY=-5; break;
+        case 88:fire(); break;
+    }
+    /*if(key==39){
+        plane.x+=10; // right
+    }else if(key==37){
+        plane.x-=10; // left
+    }else if(key==40){
+        plane.y+=10; // down
+    }else if(key==38){
+        plane.y-=10; // up
+    }*/
+    plane.render(); // 렌더링 (그래픽 처리)
+}
+
+// 총알 등장시키기
+function fire(){
+    // constructor(container, src, width, heigth, x, y, velX, velY)
+    var bullet = new Bullet(wrapper, "../images/shooting/ball.png",20,20,plane.x+plane.width, plane.y+(plane.height/2)-(10),10,0);
+    bulletArray.push(bullet); // 총알 배열에 방금 태어난 총알 인스턴스 추가하기
+}
+
+function createHero(){
+    // constructor(container, src, width, heigth, x, y, velX, velY)
+    plane = new Plane(wrapper, "../images/shooting/plane.png", 90, 70, 100, 300, 0, 0);
+}
+
+function createEnemy(){
+    // constructor(container, src, width, height, x, y, velX, velY)
+
+    for(var i=0; i<enemyImg.length; i++){
+        enemyArray[i] = new Enemy(wrapper, "../images/shooting/"+enemyImg[i]
+        , 70, 58, screen.width, 100*i, -3, 0);
+    }    
+}
+
+function bgEffect(){
+    bgX--;
+    wrapper.style.backgroundPosition=bgX+"px 0px";
+}
+
+function gameLoop(){
+    bgEffect();
+
+    plane.tick();  // 물리량 변화
+    plane.render();  // 그래픽 처리
+    
+    // 생성된 모든 총알에 tick(), render() 호출하기
+    for(var i=0; i<bulletArray.length; i++){
+        bulletArray[i].render();
+        bulletArray[i].tick(); // 배열 삭제가 되는 곳
+    }
+    for(var i=0; i<enemyArray.length; i++){
+        enemyArray[i].tick();
+        enemyArray[i].render();
+    }
+    log();
+}
+
+function log(){
+    var str="bulletArray: "+bulletArray.length;
+    str = str + ", enemyArray: "+enemyArray.length;
+    info.innerText=str;
+}
+
+window.addEventListener("load", function(){
+    init();
+    setInterval("gameLoop()", 10); // fps
+});
+
+</script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="info">게임 정보</div>
+    </div>
+</body>
+</html>

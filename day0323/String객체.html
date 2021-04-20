@@ -1,0 +1,32 @@
+<script>
+/*
+JS는 내장된 여러 객체를 지원하는데 이러한 객체를 자바스크립트 내장 객체라고 한다
+이 예제를 통해 String 객체에 대해 알아보자
+*/
+
+var str = new String("korea");  // 흔치 않은 방식
+var str2 = "korea";  // 메모리 효율성이 더 높다
+
+// 가장 흔하면서 일반적인 문자열 처리는 아래 방법이 많이 쓰인다
+// 문자열은 인간이 가장 자주 사용하는 데이터형이다
+// 객체는 자체적으로 변수(속성=property) 또는 함수(메서드=method)
+// str2.split();
+// 세탁기에 대한 사용법은 해당 설명서를 봐야 하듯
+// 해당 언어의 기능이 무엇인지 알려면 개발문서를 봐야한다
+// 이러한 개발문서를 api document라고 한다
+/*var s="korea";
+var ch = s.charAt(2); // index 번째 문자 '하나'를 반환
+
+for(var i=0; i<s.length; i++){
+    console.log(i)
+}*/
+
+//substring() 문자열내에서 일부 문자열을 추출할 수 있는 메서드
+var fruit = "pine apple";
+//형식 fruit.substring(index, [i]);
+var sub = fruit.substring(0, 4);
+console.log(sub);
+
+var sub2 = fruit.substring(5, fruit.length);
+console.log(sub2);
+</script>

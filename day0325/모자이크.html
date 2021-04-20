@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>모자이크</title>
+<script src="../JS/rect.js"></script>
+<script>
+
+var container;
+var cellSize=100; // 셀 하나당 너비, 높이가 같은 정사각형
+var cols=7; // 호수 즉, column의 갯수
+var rows=5; // 호수 즉, record의 갯수
+var i=0; // 층수
+var j=0; // 호수
+var count=0; // setInterval이 언제까지 수행할지 범위를 알아야 멈추므로...
+                    // 즉 카운터를 세다가 일정 시점에 도달하면 멈춘다
+
+function init(){
+    container=document.createElement("div");
+    container.style.width=cellSize*cols+"px";
+    container.style.height=cellSize*rows+"px";
+    container.style.margin="auto";
+    container.style.backgroundImage="url(../images/nature/nature.jpg";
+    container.style.backgroundSize=(cellSize*cols)+"px "+(cellSize*rows)+"px";
+    container.style.position="relative";
+
+    document.body.appendChild(container);
+
+    //createRect();
+}
+
+// 사각형 셀 생성하기
+function createRect(){
+    //10호의 7층짜리 아파트를 생성
+    //for(var i=0; i<rows; i++){ // 층수
+        //for(var j=0; j<cols; j++){ // 호수
+            new Rect(container, cellSize, cellSize, j*cellSize, i*cellSize);
+            j++;
+            // i가 호수의 끝에 도달하면 다시 i를 0으로 돌려놓아햐 순환이 된다
+            if(j%cols==0){
+                j=0; // 돌려놓기
+                i++; // 층수증가
+            }
+        //}
+    //}
+}
+
+// 반복문은 너무 빠르므로 원하는 시간을 지정하여 반복수행을 대신하자
+function auto(){
+    if(count<(cols*rows)){
+        console.log("현재 카운트값은 ", count);
+        createRect();
+        count++;
+    }
+}
+
+window.addEventListener("load", function(){
+    init();
+    setInterval("auto()", 10);
+});
+
+</script>
+</head>
+<body>
+    
+</body>
+</html>
